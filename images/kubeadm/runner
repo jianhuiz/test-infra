@@ -18,7 +18,7 @@ set -o nounset
 set -o pipefail
 
 if [ ! -e test-infra ]; then
-  git clone https://github.com/kubernetes/test-infra
+  git clone https://github.com/Huawei-PaaS/test-infra --branch huawei-test-infra
 fi
 
 if [ ! -e kubernetes-anywhere ]; then

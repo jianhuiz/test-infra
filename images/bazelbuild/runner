@@ -18,6 +18,6 @@ set -o nounset
 set -o pipefail
 set -o xtrace
 
-git clone https://github.com/kubernetes/test-infra
+git clone https://github.com/Huawei-PaaS/test-infra --branch huawei-test-infra
 ./test-infra/jenkins/bootstrap.py \
     "$@"
