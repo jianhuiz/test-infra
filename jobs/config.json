@@ -10104,6 +10104,8 @@
   "pull-kubernetes-bazel-build": {
     "args": [
       "--build=//cmd/... //pkg/... //federation/... //plugin/... //third_party/... //examples/... //test/... //vendor/k8s.io/...",
+      "--gcs=gs://huawei-kubernetes-release-dev/bazel",
+      "--gcs-shared=gs://huawei-kubernetes-jenkins/shared-results/",
       "--release=//build/release-tars"
     ],
     "scenario": "kubernetes_bazel",
@@ -10156,7 +10158,7 @@
       "--gcp-zone=us-central1-f",
       "--mode=docker",
       "--provider=gce",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-e2e-gce",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-e2e-gce",
       "--test_args=--ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[Feature:.+\\] --minStartupPods=8",
       "--timeout=55m"
     ],
@@ -10174,7 +10176,7 @@
       "--extract=local",
       "--gcp-zone=us-central1-f",
       "--provider=gce",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-e2e-gce-bazel",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-e2e-gce-bazel",
       "--test_args=--ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[Feature:.+\\] --minStartupPods=8",
       "--timeout=55m"
     ],
@@ -10215,7 +10217,7 @@
       "--gcp-zone=us-central1-f",
       "--mode=docker",
       "--provider=gce",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-e2e-gce-etcd3",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-e2e-gce-etcd3",
       "--test_args=--ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[Feature:.+\\] --minStartupPods=8",
       "--timeout=65m"
     ],
@@ -10236,7 +10238,7 @@
       "--gcp-zone=us-central1-f",
       "--mode=docker",
       "--provider=gce",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-e2e-gce-gci",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-e2e-gce-gci",
       "--test_args=--ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[Feature:.+\\] --minStartupPods=8",
       "--timeout=55m"
     ],
@@ -10256,7 +10258,7 @@
       "--gcp-project=k8s-jkns-pr-gce-gpus",
       "--gcp-zone=us-west1-b",
       "--provider=gce",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-e2e-gce-gpu",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-e2e-gce-gpu",
       "--test_args=--ginkgo.focus=\\[Feature:GPU\\] --minStartupPods=8",
       "--timeout=60m"
     ],
@@ -10280,7 +10282,7 @@
       "--gke-shape={\"default\":{\"Nodes\":4,\"MachineType\":\"n1-standard-2\"}}",
       "--mode=docker",
       "--provider=gke",
-      "--stage=gs://kubernetes-release-dev/ci",
+      "--stage=gs://huawei-kubernetes-release-dev/ci",
       "--stage-suffix=pull-gke",
       "--test_args=--ginkgo.flakeAttempts=2 --ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[Feature:.+\\] --minStartupPods=8",
       "--timeout=55m"
@@ -10305,7 +10307,7 @@
       "--gke-shape={\"default\":{\"Nodes\":4,\"MachineType\":\"n1-standard-2\"}}",
       "--mode=docker",
       "--provider=gke",
-      "--stage=gs://kubernetes-release-dev/ci",
+      "--stage=gs://huawei-kubernetes-release-dev/ci",
       "--stage-suffix=pull-gke-gci",
       "--test_args=--ginkgo.flakeAttempts=2 --ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[Feature:.+\\] --minStartupPods=8",
       "--timeout=55m"
@@ -10329,7 +10331,7 @@
       "--gke-environment=test",
       "--mode=docker",
       "--provider=gke",
-      "--stage=gs://kubernetes-release-dev/ci",
+      "--stage=gs://huawei-kubernetes-release-dev/ci",
       "--stage-suffix=pull-gke-gpu",
       "--test_args=--ginkgo.focus=\\[Feature:GPU\\] --minStartupPods=8",
       "--timeout=60m"
@@ -10351,7 +10353,7 @@
       "--extract=local",
       "--mode=docker",
       "--provider=aws",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-e2e-kops-aws",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-e2e-kops-aws",
       "--test_args=--ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[Feature:.+\\]|\\[HPA\\]|Dashboard|Services.*functioning.*NodePort",
       "--timeout=55m"
     ],
@@ -10372,6 +10374,7 @@
       "--provider=kubernetes-anywhere",
       "--test_args=--ginkgo.focus=\\[Conformance\\] --ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\] --minStartupPods=8",
       "--timeout=55m",
+      "--gcs-shared=gs://huawei-kubernetes-jenkins/shared-results/",
       "--use-shared-build=bazel"
     ],
     "scenario": "kubernetes_e2e",
@@ -10394,8 +10397,8 @@
       "--mode=docker",
       "--multiple-federations",
       "--provider=gce",
-      "--save=gs://kubernetes-jenkins/federation/ci-kubernetes-pull-gce-federation-deploy",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-federation-e2e-gce",
+      "--save=gs://huawei-kubernetes-jenkins/federation/ci-kubernetes-pull-gce-federation-deploy",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-federation-e2e-gce",
       "--tag=v20170728-faff708c",
       "--test_args=--ginkgo.focus=\\[Feature:Federation\\] --ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[NoCluster\\] --minStartupPods=8",
       "--timeout=90m"
@@ -10420,8 +10423,8 @@
       "--gcp-zone=us-central1-f",
       "--multiple-federations",
       "--provider=gce",
-      "--save=gs://kubernetes-jenkins/federation/ci-kubernetes-pull-gce-federation-deploy-canary",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-federation-e2e-gce-canary",
+      "--save=gs://huawei-kubernetes-jenkins/federation/ci-kubernetes-pull-gce-federation-deploy-canary",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-federation-e2e-gce-canary",
       "--test_args=--ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\]|\\[Feature:.+\\] --minStartupPods=8",
       "--timeout=90m"
     ],
@@ -10444,7 +10447,7 @@
       "--kubemark-nodes=5",
       "--mode=docker",
       "--provider=gce",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-kubemark-e2e-gce",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-kubemark-e2e-gce",
       "--test=false",
       "--test_args=--ginkgo.focus=\\[Feature:Empty\\] --gather-resource-usage=true",
       "--timeout=45m"
@@ -10468,7 +10471,7 @@
       "--kubemark-nodes=500",
       "--mode=docker",
       "--provider=gce",
-      "--stage=gs://kubernetes-release-pull/ci/pull-kubernetes-kubemark-e2e-gce-big",
+      "--stage=gs://huawei-kubernetes-release-pull/ci/pull-kubernetes-kubemark-e2e-gce-big",
       "--test=false",
       "--test_args=--ginkgo.focus=\\[Feature:Performance\\] --gather-resource-usage=true --gather-metrics-at-teardown=true --output-print-type=json",
       "--timeout=140m"

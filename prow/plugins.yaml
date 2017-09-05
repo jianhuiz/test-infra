@@ -4,11 +4,8 @@
 ---
 triggers:
 - repos:
-  - kubernetes
-  - kubernetes-incubator
-  - kubernetes-security
-  - google/cadvisor
-  trusted_org: kubernetes
+  - Huawei-PaaS
+  trusted_org: Huawei-PaaS
 
 heart:
   adorees:
@@ -44,7 +41,7 @@ plugins:
   kubernetes/kops:
   - trigger
 
-  kubernetes/kubernetes:
+  Huawei-PaaS/kubernetes:
   - trigger
   - release-note
 
@@ -52,7 +49,7 @@ plugins:
   - trigger
   - config-updater
 
-  kubernetes:
+  Huawei-PaaS:
   - assign
   - cla
   - close
