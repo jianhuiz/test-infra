@@ -19,13 +19,16 @@ metadata:
     app: tot
   name: tot-storage
 spec:
+  claimRef:
+    name: tot-storage
+    namespace: default
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  gcePersistentDisk:
-    pdName: tot-storage
+  cinder:
+    volumeID: 90b467cf-bb11-417a-8615-8c0fec7d0b3f # tot-storage
     fsType: ext4
 ---
 kind: PersistentVolumeClaim
