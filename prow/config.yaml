@@ -543,17 +543,111 @@ presubmits:
     rerun_command: "/test pull-kubernetes-node-e2e"
     trigger: "(?m)^/test( all| pull-kubernetes-node-e2e),?(\\s+|$)"
   - name: pull-kubernetes-unit
-    agent: jenkins
+    agent: kubernetes
     always_run: true
     context: pull-kubernetes-unit
     rerun_command: "/test pull-kubernetes-unit"
     trigger: "(?m)^/test( all| pull-kubernetes-unit),?(\\s+|$)"
+    spec:
+      containers:
+      - image: jianhuiz/kube-test
+        args:
+        - "--clean"
+        - "--root=/go/src"
+        - "--job=$(JOB_NAME)"
+        - "--repo=github.com/Huawei-PaaS/$(REPO_NAME)=$(PULL_REFS)"
+        - "--service-account=/etc/service-account/service-account.json"
+        - "--upload=gs://huawei-kubernetes-jenkins/pr-logs"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: service
+          mountPath: /etc/service-account
+          readOnly: true
+        - name: docker
+          mountPath: /var/run
+          subPath: docker.sock
+        - name: go
+          mountPath: /go
+        - name: workspace
+          mountPath: /workspace
+        - name: runner
+          mountPath: /usr/local/bin
+        command:
+        - /bin/bash
+        - /usr/local/bin/runner
+        ports:
+        - containerPort: 9999
+          hostPort: 9999
+      volumes:
+      - name: service
+        secret:
+          secretName: service-account
+      - name: docker
+        hostPath:
+          path: /var/run
+      - name: go
+        hostPath:
+          path: /go
+      - name: workspace
+        hostPath:
+          path: /workspace
+      - name: runner
+        configMap:
+          name: kube-test-runner
   - name: pull-kubernetes-verify
-    agent: jenkins
+    agent: kubernetes
     always_run: true
     context: pull-kubernetes-verify
     rerun_command: "/test pull-kubernetes-verify"
     trigger: "(?m)^/test( all| pull-kubernetes-verify),?(\\s+|$)"
+    spec:
+      containers:
+      - image: jianhuiz/kube-test
+        args:
+        - "--clean"
+        - "--root=/go/src"
+        - "--job=$(JOB_NAME)"
+        - "--repo=github.com/Huawei-PaaS/$(REPO_NAME)=$(PULL_REFS)"
+        - "--service-account=/etc/service-account/service-account.json"
+        - "--upload=gs://huawei-kubernetes-jenkins/pr-logs"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: service
+          mountPath: /etc/service-account
+          readOnly: true
+        - name: docker
+          mountPath: /var/run
+          subPath: docker.sock
+        - name: go
+          mountPath: /go
+        - name: workspace
+          mountPath: /workspace
+        - name: runner
+          mountPath: /usr/local/bin
+        command:
+        - /bin/bash
+        - /usr/local/bin/runner
+        ports:
+        - containerPort: 9999
+          hostPort: 9999
+      volumes:
+      - name: service
+        secret:
+          secretName: service-account
+      - name: docker
+        hostPath:
+          path: /var/run
+      - name: go
+        hostPath:
+          path: /go
+      - name: workspace
+        hostPath:
+          path: /workspace
+      - name: runner
+        configMap:
+          name: kube-test-runner
   kubernetes-security/kubernetes:
   - name: pull-security-kubernetes-bazel-build
     agent: kubernetes
