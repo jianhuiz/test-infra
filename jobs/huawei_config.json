@@ -41,5 +41,25 @@
     "sigOwners": [
       "sig-cluster-lifecycle"
     ]
+  },
+  "pull-kubernetes-unit": {
+    "args": [
+      "--script=KUBERNETES_SERVICE_HOST= KUBERNETES_SERVICE_PORT= ./hack/jenkins/test-dockerized.sh",
+      "--branch=${PULL_BASE_REF}"
+    ],
+    "scenario": "kubernetes_verify",
+    "sigOwners": [
+      "UNKNOWN"
+    ]
+  },
+  "pull-kubernetes-verify": {
+    "args": [
+      "--branch=${PULL_BASE_REF}",
+      "--script=./hack/jenkins/verify-dockerized.sh"
+    ],
+    "scenario": "kubernetes_verify",
+    "sigOwners": [
+      "UNKNOWN"
+    ]
   }
 }
