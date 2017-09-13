@@ -28,8 +28,8 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  gcePersistentDisk:
-    pdName: boskos-storage
+  cinder:
+    volumeID: 148a0495-94f4-41cb-9664-cd7f5a468d42 # boskos-storage
     fsType: ext4
 ---
 # Start of StatefulSet
@@ -72,7 +72,6 @@ spec:
       name: boskos-volume
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: boskos
       resources:
         requests:
           storage: 1Gi

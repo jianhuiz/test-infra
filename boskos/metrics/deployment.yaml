@@ -25,8 +25,8 @@ spec:
     protocol: TCP
     port: 80
     targetPort: 8080
-  loadBalancerIP: 104.197.27.114
-  type: LoadBalancer
+#  loadBalancerIP: 104.197.27.114
+#  type: LoadBalancer
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment

@@ -114,6 +114,7 @@ spec:
       - name: plank
         image: gcr.io/k8s-prow/plank:0.49
         args:
+        - --tot-url=http://tot
         - --dry-run=false
         volumeMounts:
         - name: oauth
@@ -235,7 +236,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /*
+      - path: /
         backend:
           serviceName: deck
           servicePort: 80
