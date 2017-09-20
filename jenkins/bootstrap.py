@@ -771,7 +771,7 @@ def job_args(args):
 
 def job_script(job, extra_job_args):
     """Return path to script for job."""
-    with open(test_infra('jobs/config.json')) as fp:
+    with open(test_infra('jobs/huawei_config.json')) as fp:
         config = json.loads(fp.read())
     job_config = config[job]
     cmd = test_infra('scenarios/%s.py' % job_config['scenario'])

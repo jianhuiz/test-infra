@@ -8,8 +8,8 @@ load(
 
 go_binary(
     name = "mkpj",
-    args = ["--config-path=$(location //prow:config.yaml)"],
-    data = ["//prow:config.yaml"],
+    args = ["--config-path=$(location //prow:huawei_config.yaml)"],
+    data = ["//prow:huawei_config.yaml"],
     library = ":go_default_library",
 )
 

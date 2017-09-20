@@ -1,0 +1,45 @@
+{
+  "pull-kubernetes-bazel-build": {
+    "args": [
+      "--build=//cmd/... //pkg/... //federation/... //plugin/... //third_party/... //examples/... //test/... //vendor/k8s.io/...",
+      "--gcs=gs://huawei-kubernetes-release-dev/bazel",
+      "--gcs-shared=gs://huawei-kubernetes-jenkins/shared-results/",
+      "--release=//build/release-tars"
+    ],
+    "scenario": "kubernetes_bazel",
+    "sigOwners": [
+      "sig-testing"
+    ]
+  },
+  "pull-kubernetes-bazel-test": {
+    "args": [
+      "--test=//cmd/... //pkg/... //federation/... //plugin/... //third_party/... //hack/... //hack:verify-all //vendor/k8s.io/...",
+      "--test-args=--test_tag_filters=-integration",
+      "--test-args=--flaky_test_attempts=3"
+    ],
+    "scenario": "kubernetes_bazel",
+    "sigOwners": [
+      "sig-testing"
+    ]
+  },
+  "pull-kubernetes-e2e-kubeadm-gce": {
+    "args": [
+      "--cluster=",
+      "--deployment=kubernetes-anywhere",
+      "--env-file=jobs/platform/gce.env",
+      "--gcp-zone=us-central1-f",
+      "--ginkgo-parallel=30",
+      "--kubeadm=pull",
+      "--kubernetes-anywhere-kubernetes-version=ci/latest",
+      "--provider=kubernetes-anywhere",
+      "--test_args=--ginkgo.focus=\\[Conformance\\] --ginkgo.skip=\\[Slow\\]|\\[Serial\\]|\\[Disruptive\\]|\\[Flaky\\] --minStartupPods=8",
+      "--timeout=55m",
+      "--gcs-shared=gs://huawei-kubernetes-jenkins/shared-results/",
+      "--use-shared-build=bazel"
+    ],
+    "scenario": "kubernetes_e2e",
+    "sigOwners": [
+      "sig-cluster-lifecycle"
+    ]
+  }
+}
