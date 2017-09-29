@@ -283,3 +283,83 @@ presubmits:
       - name: runner
         configMap:
           name: kube-test-runner
+
+  - name: pull-has-upstream-pr
+    agent: kubernetes
+    always_run: true
+    context: pull-has-upstream-pr
+    rerun_command: "/test pull-has-upstream-pr"
+    trigger: "(?m)^/test( all| pull-has-upstream-pr),?(\\s+|$)"
+    spec:
+      containers:
+      - image: gcr.io/k8s-testimages/gcloud-in-go:0.5
+        args:
+        - "--job=$(JOB_NAME)"
+        - "--upload=gs://huawei-kubernetes-jenkins/pr-logs/pull/$(REPO_OWNER)_$(REPO_NAME)/$(PULL_NUMBER)"
+        - "--bare"
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/service-account/service-account.json
+        volumeMounts:
+        - name: token
+          mountPath: /etc/token
+        - name: service
+          mountPath: /etc/service-account
+          readOnly: true
+        - name: runner
+          mountPath: /usr/local/bin/runner
+          subPath: runner
+        command:
+        - /bin/bash
+        - /usr/local/bin/runner
+      volumes:
+      - name: token
+        secret:
+          secretName: fejta-bot-token
+      - name: service
+        secret:
+          secretName: service-account
+      - name: runner
+        configMap:
+          name: gcloud-runner
+
+periodics:
+- name: periodic-test-infra-retester
+  interval: 20m  # Retest at most 1 PR per 20m, which should not DOS the queue.
+  agent: kubernetes
+  spec:
+    containers:
+    - image: gcr.io/k8s-testimages/commenter:v20170808-abf66782
+      args:
+      - |-
+        --query=is:pr
+        -label:do-not-merge
+        -label:do-not-merge/blocked-paths
+        -label:do-not-merge/cherry-pick-not-approved
+        -label:do-not-merge/hold
+        -label:do-not-merge/release-note-label-needed
+        -label:do-not-merge/work-in-progress
+        label:lgtm
+        status:failure
+        -label:needs-rebase
+        -label:needs-ok-to-test
+        -label:"cncf-cla: no"
+        repo:Huawei-PaaS/kubernetes
+      - --token=/etc/token/bot-github-token
+      - |-
+        --comment=/retest
+        This bot automatically retries jobs that failed/flaked on approved PRs (send feedback to `@fejta`).
+
+        Review the [full test history](https://k8s-gubernator.appspot.com/pr/{{.Number}}) for this PR.
+
+      - --template
+      - --ceiling=1
+      - --confirm
+      - --updated=24h
+      volumeMounts:
+      - name: token
+        mountPath: /etc/token
+    volumes:
+    - name: token
+      secret:
+        secretName: fejta-bot-token

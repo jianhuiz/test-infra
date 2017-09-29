@@ -61,5 +61,14 @@
     "sigOwners": [
       "UNKNOWN"
     ]
+  },
+  "pull-has-upstream-pr": {
+    "args": [
+      "./test-infra/experiment/upstream/upstream.sh"
+    ],
+    "scenario": "execute",
+    "sigOwners": [
+      "UNKNOWN"
+    ]
   }
 }

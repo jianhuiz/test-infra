@@ -16,10 +16,15 @@
 set -o errexit
 set -o nounset
 set -o pipefail
+set -o xtrace
 
-#git clone https://github.com/kubernetes/test-infra
-git clone https://github.com/Huawei-PaaS/test-infra --branch huawei-test-infra
-./test-infra/jenkins/bootstrap.py \
-    --job=${JOB_NAME} \
-    --service-account=${GOOGLE_APPLICATION_CREDENTIALS} \
-    "$@"
+pushd `dirname $0`
+
+#go get k8s.io/test-infra/prow/github
+mkdir -p $GOPATH/src/k8s.io/
+ln -s `realpath ../../../test-infra` $GOPATH/src/k8s.io/
+
+go build
+./upstream --token /etc/token/bot-github-token --org $REPO_OWNER --repo $REPO_NAME --pull $PULL_NUMBER
+
+popd
