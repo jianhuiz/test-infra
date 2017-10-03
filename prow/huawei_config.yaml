@@ -337,11 +337,6 @@ periodics:
       env:
       - name: GOOGLE_APPLICATION_CREDENTIALS
         value: /etc/service-account/service-account.json
-      - name: GITHUB_TOKEN
-        valueFrom:
-          secretKeyRef:
-            name: fejta-bot-token
-            key: bot-github-token
       - name: REPO_OWNER
         value: Huawei-PaaS
       - name: REPO_NAME
@@ -351,6 +346,8 @@ periodics:
       - name: BRANCHES
         value: master,release-1.7,release-1.8
       volumeMounts:
+      - name: token
+        mountPath: /etc/token
       - name: service
         mountPath: /etc/service-account
         readOnly: true
@@ -361,6 +358,9 @@ periodics:
       - /bin/bash
       - /usr/local/bin/runner
     volumes:
+    - name: token
+      secret:
+        secretName: fejta-bot-token
     - name: service
       secret:
         secretName: service-account

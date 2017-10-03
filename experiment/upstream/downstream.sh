@@ -18,6 +18,8 @@ set -o nounset
 set -o pipefail
 set -o xtrace
 
+GITHUB_TOKEN=$(</etc/token/bot-github-token)
+
 git clone --no-checkout https://huawei-k8s-bot:$GITHUB_TOKEN@github.com/$REPO_OWNER/$REPO_NAME.git
 cd kubernetes
 git remote add upstream $UPSTREAM_URL
