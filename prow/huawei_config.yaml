@@ -324,6 +324,50 @@ presubmits:
           name: gcloud-runner
 
 periodics:
+- name: periodic-downstream-kubernetes
+  interval: 48h
+  agent: kubernetes
+  spec:
+    containers:
+    - image: gcr.io/k8s-testimages/gcloud-in-go:0.5
+      args:
+      - "--job=$(JOB_NAME)"
+      - "--upload=gs://huawei-kubernetes-jenkins/logs"
+      - "--bare"
+      env:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /etc/service-account/service-account.json
+      - name: GITHUB_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: fejta-bot-token
+            key: bot-github-token
+      - name: REPO_OWNER
+        value: Huawei-PaaS
+      - name: REPO_NAME
+        value: kubernetes
+      - name: UPSTREAM_URL
+        value: https://github.com/kubernetes/kubernetes.git
+      - name: BRANCHES
+        value: master,release-1.7,release-1.8
+      volumeMounts:
+      - name: service
+        mountPath: /etc/service-account
+        readOnly: true
+      - name: runner
+        mountPath: /usr/local/bin/runner
+        subPath: runner
+      command:
+      - /bin/bash
+      - /usr/local/bin/runner
+    volumes:
+    - name: service
+      secret:
+        secretName: service-account
+    - name: runner
+      configMap:
+        name: gcloud-runner
+
 - name: periodic-test-infra-retester
   interval: 20m  # Retest at most 1 PR per 20m, which should not DOS the queue.
   agent: kubernetes

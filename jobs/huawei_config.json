@@ -70,5 +70,14 @@
     "sigOwners": [
       "UNKNOWN"
     ]
+  },
+  "periodic-downstream-kubernetes": {
+    "args": [
+      "./test-infra/experiment/upstream/downstream.sh"
+    ],
+    "scenario": "execute",
+    "sigOwners": [
+      "UNKNOWN"
+    ]
   }
 }
