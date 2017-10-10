@@ -53,11 +53,10 @@ presubmits:
         - name: cache-ssd
           mountPath: /root/.cache
         - name: runner
-          mountPath: /usr/local/bin/runner
-          subPath: runner
+          mountPath: /usr/local/huawei
         command:
         - /bin/bash
-        - /usr/local/bin/runner
+        - /usr/local/huawei/runner
         ports:
         - containerPort: 9999
           hostPort: 9999
@@ -111,11 +110,10 @@ presubmits:
           - name: cache-ssd
             mountPath: /root/.cache
           - name: runner
-            mountPath: /usr/local/bin/runner
-            subPath: runner
+            mountPath: /usr/local/huawei
           command:
           - /bin/bash
-          - /usr/local/bin/runner
+          - /usr/local/huawei/runner
           ports:
           - containerPort: 9999
             hostPort: 9999
@@ -167,11 +165,10 @@ presubmits:
         - name: cache-ssd
           mountPath: /root/.cache
         - name: runner
-          mountPath: /usr/local/bin/runner
-          subPath: runner
+          mountPath: /usr/local/huawei
         command:
         - /bin/bash
-        - /usr/local/bin/runner
+        - /usr/local/huawei/runner
         ports:
         - containerPort: 9999
           hostPort: 9999
@@ -213,11 +210,10 @@ presubmits:
         - name: k8s
           mountPath: /go/src/k8s.io/kubernetes
         - name: runner
-          mountPath: /usr/local/bin/runner
-          subPath: runner
+          mountPath: /usr/local/huawei
         command:
         - /bin/bash
-        - /usr/local/bin/runner
+        - /usr/local/huawei/runner
         ports:
         - containerPort: 9999
           hostPort: 9999
@@ -262,11 +258,10 @@ presubmits:
         - name: k8s
           mountPath: /go/src/k8s.io/kubernetes
         - name: runner
-          mountPath: /usr/local/bin/runner
-          subPath: runner
+          mountPath: /usr/local/huawei
         command:
         - /bin/bash
-        - /usr/local/bin/runner
+        - /usr/local/huawei/runner
         ports:
         - containerPort: 9999
           hostPort: 9999
@@ -307,11 +302,10 @@ presubmits:
           mountPath: /etc/service-account
           readOnly: true
         - name: runner
-          mountPath: /usr/local/bin/runner
-          subPath: runner
+          mountPath: /usr/local/huawei
         command:
         - /bin/bash
-        - /usr/local/bin/runner
+        - /usr/local/huawei/runner
       volumes:
       - name: token
         secret:
@@ -352,11 +346,10 @@ periodics:
         mountPath: /etc/service-account
         readOnly: true
       - name: runner
-        mountPath: /usr/local/bin/runner
-        subPath: runner
+        mountPath: /usr/local/huawei
       command:
       - /bin/bash
-      - /usr/local/bin/runner
+      - /usr/local/huawei/runner
     volumes:
     - name: token
       secret:
