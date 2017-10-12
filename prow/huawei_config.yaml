@@ -32,7 +32,7 @@ presubmits:
     - release-1.6  # doesn't have BUILD files under //vendor/k8s.io
     spec:
       containers:
-      - image: gcr.io/k8s-testimages/bazelbuild:v20170929-ed26bd34-0.5.4
+      - image: gcr.io/k8s-testimages/bazelbuild:v20171005-2f37588f-0.6.1
         args:
         - "--clean"
         - "--git-cache=/root/.cache/git"
@@ -82,7 +82,7 @@ presubmits:
       trigger: "(?m)^/test pull-kubernetes-e2e-kubeadm-gce,?(\\s+|$)"
       spec:
         containers:
-        - image: gcr.io/k8s-testimages/e2e-kubeadm:v20171003-d61471c6
+        - image: gcr.io/k8s-testimages/e2e-kubeadm:v20171011-12fd4621
           args:
           - "--repo=github.com/Huawei-PaaS/$(REPO_NAME)=$(PULL_REFS)"
           - "--upload=gs://huawei-kubernetes-jenkins/pr-logs"
@@ -144,7 +144,7 @@ presubmits:
     - release-1.6  # doesn't have BUILD files under //vendor/k8s.io
     spec:
       containers:
-      - image: gcr.io/k8s-testimages/bazelbuild:v20170929-ed26bd34-0.5.4
+      - image: gcr.io/k8s-testimages/bazelbuild:v20171005-2f37588f-0.6.1
         args:
         - "--clean"
         - "--git-cache=/root/.cache/git"
